@@ -1,207 +1,357 @@
+---
+layout: false
+---
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-  
-<link rel="stylesheet" href="/css/style.css">
-
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>凌风的个人站 | Lingfeng's Space</title>
+    <!-- 引入 Tailwind CSS (为了快速构建现代化布局) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 FontAwesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入 Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+    <style>
+        /* --- 全局动画与样式定义 --- */
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
 
-  
-  
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+        body {
+            font-family: 'Space Grotesk', 'Noto Sans SC', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
 
-<meta name="generator" content="Hexo 8.1.1"></head>
+        /* 动态流动背景 */
+        .animated-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 10% 20%, rgb(67, 56, 202) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgb(190, 24, 93) 0%, transparent 40%),
+                        radial-gradient(circle at 50% 50%, rgb(14, 165, 233) 0%, transparent 60%);
+            filter: blur(80px);
+            animation: moveGradient 15s ease infinite alternate;
+        }
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
+        @keyframes moveGradient {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 0.6; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        /* 玻璃拟态卡片 */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            border-radius: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        /* 侧边栏样式 */
+        .sidebar-item {
+            position: relative;
+            padding: 0.75rem 1rem;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .sidebar-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .sidebar-item:hover::before {
+            left: 100%;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(255,255,255,0.05);
+            color: #38bdf8;
+        }
+
+        /* 打字机光标 */
+        .cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* 滚动条美化 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+
+        /* 元素入场动画 */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 骰子旋转动画 (DND) */
+        .d20-spin:hover {
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyan-500 selection:text-white">
+
+    <!-- 动态背景层 -->
+    <div class="animated-bg"></div>
+
+    <div class="min-h-screen flex flex-col md:flex-row max-w-7xl mx-auto p-4 md:p-8 gap-8 relative z-10">
+
+        <!-- 左侧侧边栏 (Sidebar) -->
+        <aside class="md:w-1/4 flex flex-col gap-6 fade-in-up" style="transition-delay: 100ms;">
+            <!-- 个人简介卡片 -->
+            <div class="glass-card p-8 flex flex-col items-center text-center sticky top-8">
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-pink-600 to-blue-600 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-200"></div>
+                    <!-- 头像占位符 -->
+                    <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=Lingfeng&backgroundColor=b6e3f4" alt="Avatar" class="relative w-32 h-32 rounded-full border-4 border-slate-800 shadow-xl object-cover transform transition group-hover:rotate-6">
+                </div>
+                
+                <h1 class="mt-6 text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400">凌风</h1>
+                <p class="text-slate-400 text-sm mt-2">Level 1 网站构建者 / 混乱中立</p>
+
+                <!-- 导航菜单 -->
+                <nav class="w-full mt-8 flex flex-col gap-2 text-left">
+                    <a href="#articles" class="sidebar-item"><i class="fas fa-feather-alt w-6"></i> 文章随笔</a>
+                    <a href="#tools" class="sidebar-item"><i class="fas fa-toolbox w-6"></i> 小工具集</a>
+                    <a href="#games" class="sidebar-item"><i class="fas fa-gamepad w-6"></i> 游戏时间</a>
+                    <a href="#dnd" class="sidebar-item text-red-400 hover:text-red-300"><i class="fas fa-dice-d20 w-6"></i> 跑团招募</a>
+                </nav>
+
+                <!-- 感谢名单 (Requested Feature) -->
+                <div class="w-full mt-8 pt-6 border-t border-slate-700">
+                    <h3 class="text-xs uppercase tracking-widest text-slate-500 mb-3 font-bold">Special Thanks</h3>
+                    <ul class="text-sm space-y-2 text-slate-400">
+                        <li class="flex items-center gap-2">
+                            <i class="fab fa-google text-blue-400"></i> Gemini AI <span class="text-xs opacity-50 ml-auto">Code Assist</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fab fa-github text-white"></i> GitHub <span class="text-xs opacity-50 ml-auto">Hosting</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-user-astronaut text-cyan-400"></i> 凌风本人 <span class="text-xs opacity-50 ml-auto">Ideas</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="mt-8 flex gap-4">
+                    <a href="#" class="text-2xl text-slate-400 hover:text-white transition"><i class="fab fa-github"></i></a>
+                    <a href="#" class="text-2xl text-slate-400 hover:text-blue-400 transition"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-2xl text-slate-400 hover:text-pink-500 transition"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 右侧主内容 (Main Content) -->
+        <main class="flex-1 flex flex-col gap-10">
+            
+            <!-- Hero Header -->
+            <header class="glass-card p-10 fade-in-up" style="transition-delay: 200ms;">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Hello, World.</h2>
+                <p class="text-xl text-cyan-200 cursor font-mono h-8" id="typing-text"></p>
+                <p class="mt-6 text-slate-300 leading-relaxed">
+                    欢迎来到我的赛博角落。这里目前是一片荒原，但也是万丈高楼的地基。<br>
+                    正在努力建设中，虽然不知道什么时候能完工，但看着好看就行了对吧？
+                </p>
+            </header>
+
+            <!-- 1. 文章占位区 -->
+            <section id="articles" class="fade-in-up">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-1 h-8 bg-cyan-500 rounded-full"></div>
+                    <h2 class="text-2xl font-bold">最近更新 (Articles)</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- 文章卡片 1 -->
+                    <article class="glass-card p-6 cursor-pointer group relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-purple-500 rounded-full blur-2xl opacity-10 -mr-10 -mt-10 transition group-hover:opacity-30"></div>
+                        <span class="text-xs font-mono text-cyan-400 border border-cyan-500/30 px-2 py-1 rounded">2025.05.20</span>
+                        <h3 class="text-xl font-bold mt-3 mb-2 group-hover:text-cyan-300 transition">第一篇 Hello World</h3>
+                        <p class="text-slate-400 text-sm line-clamp-3">这是一个占位符。如果你看到了这个，说明网站还没有完全崩坏。这里未来会放一些技术总结或者无聊的碎碎念...</p>
+                    </article>
+
+                    <!-- 文章卡片 2 -->
+                    <article class="glass-card p-6 cursor-pointer group relative overflow-hidden">
+                         <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500 rounded-full blur-2xl opacity-10 -mr-10 -mt-10 transition group-hover:opacity-30"></div>
+                        <span class="text-xs font-mono text-cyan-400 border border-cyan-500/30 px-2 py-1 rounded">2025.04.01</span>
+                        <h3 class="text-xl font-bold mt-3 mb-2 group-hover:text-cyan-300 transition">如何搭建一个很酷的博客</h3>
+                        <p class="text-slate-400 text-sm line-clamp-3">正如你所见，哪怕内容是空的，UI也要拉满。这是前端工程师最后的倔强。</p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- 2. 小工具占位区 -->
+            <section id="tools" class="fade-in-up">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-1 h-8 bg-pink-500 rounded-full"></div>
+                    <h2 class="text-2xl font-bold">工具箱 (Tools)</h2>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="glass-card p-4 flex flex-col items-center justify-center gap-3 hover:bg-white/10 cursor-pointer">
+                        <i class="fas fa-qrcode text-3xl text-pink-400"></i>
+                        <span class="text-sm font-medium">二维码生成</span>
+                    </div>
+                    <div class="glass-card p-4 flex flex-col items-center justify-center gap-3 hover:bg-white/10 cursor-pointer">
+                        <i class="fas fa-image text-3xl text-purple-400"></i>
+                        <span class="text-sm font-medium">图床上传</span>
+                    </div>
+                    <div class="glass-card p-4 flex flex-col items-center justify-center gap-3 hover:bg-white/10 cursor-pointer">
+                        <i class="fas fa-file-code text-3xl text-yellow-400"></i>
+                        <span class="text-sm font-medium">JSON 格式化</span>
+                    </div>
+                    <div class="glass-card p-4 flex flex-col items-center justify-center gap-3 hover:bg-white/10 cursor-pointer text-slate-500 border-dashed border-slate-600">
+                        <i class="fas fa-plus text-2xl"></i>
+                        <span class="text-sm">WIP...</span>
+                    </div>
+                </div>
+            </section>
+
+             <!-- 3. 游戏占位区 -->
+             <section id="games" class="fade-in-up">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-1 h-8 bg-green-500 rounded-full"></div>
+                    <h2 class="text-2xl font-bold">摸鱼时间 (Games)</h2>
+                </div>
+                
+                <div class="glass-card p-1 min-h-[200px] flex items-center justify-center relative overflow-hidden group">
+                    <!-- 背景伪装 -->
+                    <div class="absolute inset-0 bg-cover bg-center opacity-40 grayscale group-hover:grayscale-0 transition duration-700 transform group-hover:scale-110" style="background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80');"></div>
+                    <div class="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition"></div>
+                    
+                    <div class="relative z-10 text-center">
+                        <i class="fas fa-gamepad text-5xl mb-3 text-green-400 d20-spin"></i>
+                        <h3 class="text-2xl font-bold text-white">Project: Unknown</h3>
+                        <p class="text-slate-300 mt-2">点击启动游戏 (并没有实装)</p>
+                        <button class="mt-4 px-6 py-2 bg-green-600 hover:bg-green-500 text-white rounded-full font-bold transition shadow-[0_0_15px_rgba(22,163,74,0.5)]">Start Game</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DND 强力安利区域 (Footer Area) -->
+            <section id="dnd" class="glass-card p-8 text-center border-red-500/30 shadow-[0_0_30px_rgba(220,38,38,0.2)] fade-in-up relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent"></div>
+                
+                <i class="fas fa-dice-d20 text-6xl text-red-500 mb-4 inline-block hover:rotate-180 transition duration-700"></i>
+                <h2 class="text-3xl font-bold text-red-100 mb-2 font-serif">Fate Needs You!</h2>
+                <p class="text-red-200/80 mb-6 italic">"Roll for Initiative..."</p>
+                
+                <p class="text-slate-300 mb-6 max-w-xl mx-auto leading-relaxed">
+                    在充满数据的网络世界之外，还有一个由想象力构建的龙与地下城。
+                    <br>我们有龙，有地牢，有永远凑不齐人的固定队...（悲）
+                </p>
+                
+                <a href="#" class="inline-block px-8 py-3 bg-red-600/80 hover:bg-red-500 backdrop-blur text-white rounded-lg font-bold tracking-wider transition hover:shadow-lg transform hover:-translate-y-1">
+                    来跑团吧！求你了！
+                </a>
+            </section>
+
+            <!-- 页脚 -->
+            <footer class="text-center text-slate-600 text-sm py-8">
+                <p>&copy; 2026 凌风 | Powered by <i class="fab fa-html5 text-orange-500"></i> & <i class="fab fa-css3 text-blue-500"></i></p>
+            </footer>
+
+        </main>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        
-          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
 
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/02/02/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2026-02-02T06:30:12.940Z" itemprop="datePublished">2026-02-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/02/02/hello-world/">Hello World</a>
-    </h1>
-  
+    <script>
+        // --- 简单的交互逻辑 ---
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+        // 1. 打字机效果
+        const texts = ["构建数字花园中...", "正在进行骰子检定...", "CSS 魔法吟唱中...", "今天天气真不错"];
+        let count = 0;
+        let index = 0;
+        let currentText = "";
+        let letter = "";
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+        (function type() {
+            if (count === texts.length) {
+                count = 0;
+            }
+            currentText = texts[count];
+            letter = currentText.slice(0, ++index);
+            
+            document.getElementById('typing-text').textContent = letter;
+            
+            if (letter.length === currentText.length) {
+                count++;
+                index = 0;
+                setTimeout(type, 2000); // 停顿2秒
+            } else {
+                setTimeout(type, 100); // 打字速度
+            }
+        }());
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+        // 2. 滚动时元素淡入 (Intersection Observer)
+        const observerOptions = {
+            threshold: 0.1
+        };
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // 只触发一次
+                }
+            });
+        }, observerOptions);
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2026/02/02/hello-world/" data-id="cuid2d7yfodwMVUPMjyBpuiCE" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/02/">February 2026</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2026/02/02/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2026 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.6.4.min.js"></script>
-
-
-
-  
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
-  </div>
+    </script>
 </body>
 </html>
