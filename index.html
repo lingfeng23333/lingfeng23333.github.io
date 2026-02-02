@@ -1,39 +1,27 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>凌风 | 个人观测站</title>
-    <!-- 引入 Noto Serif SC 字体，营造日系文学质感 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700&family=Noto+Sans+SC:wght@300;400&display=swap"
-        rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* --- 核心变量与重置 --- */
+        /* --- 核心变量 --- */
         :root {
             --bg-color: #fdfbf7;
-            /* 极淡的米白色，护眼且有质感 */
             --text-main: #2b2b2b;
-            /* 墨黑 */
             --text-sub: #888888;
             --accent: #b53f3f;
-            /* 印泥红，用于强调 */
             --border: #e0e0e0;
-            --glass: rgba(255, 255, 255, 0.7);
-            --shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
+            --shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
             --ease: cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Noto Serif SC', serif;
             background-color: var(--bg-color);
@@ -43,30 +31,20 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-            transition: color 0.3s;
-        }
+        a { text-decoration: none; color: inherit; transition: color 0.3s; }
+        a:hover { color: var(--accent); }
 
-        a:hover {
-            color: var(--accent);
-        }
+        /* --- 布局 --- */
+        .layout { display: flex; min-height: 100vh; }
 
-        /* --- 布局网格 --- */
-        .layout {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* --- 侧边栏设计 (Sticky) --- */
+        /* --- 侧边栏 --- */
         .sidebar {
             width: 280px;
             padding: 60px 40px;
-            border-right: 1px solid rgba(0, 0, 0, 0.05);
+            border-right: 1px solid rgba(0,0,0,0.05);
             position: fixed;
             height: 100vh;
-            background: linear-gradient(180deg, var(--bg-color) 0%, rgba(255, 255, 255, 0) 100%);
+            background: linear-gradient(180deg, var(--bg-color) 0%, rgba(255,255,255,0) 100%);
             z-index: 10;
             display: flex;
             flex-direction: column;
@@ -79,7 +57,6 @@
             letter-spacing: 0.1em;
             margin-bottom: 40px;
             writing-mode: vertical-rl;
-            /* 竖排文字，日系感拉满 */
             text-orientation: upright;
             height: 200px;
         }
@@ -94,10 +71,7 @@
             transition: transform 0.4s var(--ease), color 0.3s;
         }
 
-        .nav-links li:hover {
-            transform: translateX(10px);
-            color: var(--text-main);
-        }
+        .nav-links li:hover { transform: translateX(10px); color: var(--text-main); }
 
         .dnd-promo {
             margin-top: auto;
@@ -106,40 +80,26 @@
             border-top: 1px solid var(--border);
             padding-top: 20px;
         }
+        .dnd-highlight { color: var(--accent); font-weight: bold; display: block; margin-top: 5px; }
 
-        .dnd-highlight {
-            color: var(--accent);
-            font-weight: bold;
-            display: block;
-            margin-top: 5px;
-        }
-
-        /* --- 主内容区 --- */
+        /* --- 主内容 --- */
         .main-content {
             margin-left: 280px;
-            /* 留出侧边栏宽度 */
             flex: 1;
             padding: 80px 10%;
             max-width: 1200px;
         }
 
-        /* --- 动画类 --- */
+        /* --- 动画 --- */
         .fade-in-up {
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 1s var(--ease), transform 1s var(--ease);
         }
+        .fade-in-up.visible { opacity: 1; transform: translateY(0); }
 
-        .fade-in-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- 板块通用样式 --- */
-        section {
-            margin-bottom: 120px;
-            position: relative;
-        }
+        /* --- 模块样式 --- */
+        section { margin-bottom: 120px; position: relative; }
 
         h2 {
             font-size: 1.5rem;
@@ -154,57 +114,116 @@
             background: #fff;
             padding: 40px;
             border-radius: 4px;
-            /* 直角微圆，保持严谨 */
             box-shadow: var(--shadow);
             transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
         }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px -10px rgba(0,0,0,0.08); }
+        
+        .placeholder-text { color: var(--text-sub); font-style: italic; font-family: 'Noto Serif SC', serif; }
 
-        .card:hover {
+        /* --- 游戏区 Grid (修复后) --- */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .game-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 200px;
+            transition: all 0.3s var(--ease);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card:hover {
+            border-color: var(--accent);
             transform: translateY(-5px);
-            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow);
         }
 
-        /* --- 具体的文章/游戏占位符 --- */
-        .placeholder-text {
+        .game-card.empty {
+            background: #f9f9f9;
+            border: 1px dashed var(--border);
+            opacity: 0.7;
+        }
+
+        .game-tag {
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             color: var(--text-sub);
-            font-style: italic;
-            font-family: 'Noto Serif SC', serif;
+            margin-bottom: 10px;
         }
 
-        /* --- 交互区域 (摸猫) 新增样式 --- */
+        .game-title {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .play-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: var(--text-main);
+            color: #fff !important; /* 强制覆盖链接颜色 */
+            font-size: 0.85rem;
+            border-radius: 4px;
+            text-align: center;
+            align-self: flex-start;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        .play-btn:hover { background: var(--accent); }
+
+        .no-signal {
+            font-family: 'Noto Sans SC';
+            font-weight: bold;
+            color: #ccc;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        /* --- 交互区域 (摸猫) --- */
         .click-area.isekai-interaction {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: transparent;
             padding: 20px;
-            border: none;
-            gap: 20px;
         }
 
         .image-wrapper {
             position: relative;
             cursor: pointer;
-            transition: transform 0.1s;
             user-select: none;
         }
 
         .isekai-img {
-            width: 200px;
+            width: 200px; 
             height: auto;
             border-radius: 12px;
-            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
             transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             background: #fff;
             padding: 5px;
         }
 
-        .image-wrapper:active .isekai-img {
-            transform: scale(0.92) translateY(5px);
-        }
+        .image-wrapper:active .isekai-img { transform: scale(0.92) translateY(5px); }
 
-        /* 气泡样式 */
         .speech-bubble {
             position: absolute;
             top: -20px;
@@ -220,18 +239,13 @@
             transition: opacity 0.3s, transform 0.3s;
             pointer-events: none;
             z-index: 5;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
         .image-wrapper:hover .speech-bubble,
-        .image-wrapper:active .speech-bubble {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .image-wrapper:active .speech-bubble { opacity: 1; transform: translateY(0); }
 
-        .stats-box {
-            text-align: center;
-        }
+        .stats-box { text-align: center; margin-top: 15px; }
 
         .floating-heart {
             position: absolute;
@@ -245,40 +259,15 @@
         }
 
         @keyframes floatUp {
-            0% {
-                transform: translateY(0) scale(1) rotate(0deg);
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(-60px) scale(1.5) rotate(10deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-60px) scale(1.5) rotate(10deg); opacity: 0; }
         }
 
-        /* --- 跑团定型文 --- */
-        .copypasta-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
+        /* --- TRPG & Footer --- */
+        .copypasta-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .copypasta-box { background: #f4f4f4; padding: 25px; font-size: 0.85rem; color: #555; line-height: 2; text-align: justify; }
+        .copypasta-box h3 { margin-bottom: 15px; font-size: 1rem; color: var(--accent); }
 
-        .copypasta-box {
-            background: #f4f4f4;
-            padding: 25px;
-            font-size: 0.85rem;
-            color: #555;
-            line-height: 2;
-            text-align: justify;
-        }
-
-        .copypasta-box h3 {
-            margin-bottom: 15px;
-            font-size: 1rem;
-            color: var(--accent);
-        }
-
-        /* --- 页脚 --- */
         footer {
             margin-top: 100px;
             padding-top: 40px;
@@ -290,67 +279,26 @@
             flex-direction: column;
             gap: 5px;
         }
+        
+        #busuanzi_container_site_pv { font-family: 'Noto Sans SC', sans-serif; color: var(--text-sub); }
+        #busuanzi_value_site_pv { font-weight: bold; color: var(--text-main); margin: 0 4px; }
 
-        footer span {
-            display: block;
-        }
-
-        /* 针对不蒜子统计微调，让它不那么突兀 */
-        #busuanzi_container_site_pv {
-            font-family: 'Noto Sans SC', sans-serif;
-            color: var(--text-sub);
-        }
-
-        #busuanzi_value_site_pv {
-            font-weight: bold;
-            color: var(--text-main);
-            margin: 0 4px;
-        }
-
-        /* --- 移动端适配 --- */
+        /* --- Mobile --- */
         @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                flex-direction: row;
-                align-items: center;
-                padding: 20px;
-                border-right: none;
-                border-bottom: 1px solid var(--border);
-            }
-
-            .logo {
-                height: auto;
-                writing-mode: horizontal-tb;
-                margin-bottom: 0;
-                font-size: 1.5rem;
-            }
-
-            .nav-links,
-            .dnd-promo {
-                display: none;
-            }
-
-            .main-content {
-                margin-left: 0;
-                padding: 40px 20px;
-            }
-
-            .copypasta-container {
-                grid-template-columns: 1fr;
-            }
+            .sidebar { width: 100%; height: auto; position: relative; flex-direction: row; align-items: center; padding: 20px; border-right: none; border-bottom: 1px solid var(--border); }
+            .logo { height: auto; writing-mode: horizontal-tb; margin-bottom: 0; font-size: 1.5rem; }
+            .nav-links, .dnd-promo { display: none; }
+            .main-content { margin-left: 0; padding: 40px 20px; }
+            .copypasta-container { grid-template-columns: 1fr; }
+            .games-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
-
 <body>
 
     <div class="layout">
-        <!-- 侧面栏 -->
         <nav class="sidebar">
             <div class="logo">凌风·站</div>
-
             <ul class="nav-links">
                 <li><a href="#intro">· 观测者</a></li>
                 <li><a href="#articles">· 记录 (文章)</a></li>
@@ -359,7 +307,6 @@
                 <li><a href="#board">· 留言板</a></li>
                 <li><a href="#trpg">· 跑团劝诱</a></li>
             </ul>
-
             <div class="dnd-promo">
                 <p>世界如此无聊，不如...</p>
                 <span class="dnd-highlight">来跑团吧！（悲）</span>
@@ -367,10 +314,8 @@
             </div>
         </nav>
 
-        <!-- 主体内容 -->
         <main class="main-content">
-
-            <!-- 头部简介 -->
+            
             <section id="intro" class="fade-in-up">
                 <h1 style="font-size: 3rem; margin-bottom: 20px;">只是一个<br>普通的占位符。</h1>
                 <p style="color: var(--text-sub); max-width: 600px;">
@@ -379,7 +324,6 @@
                 </p>
             </section>
 
-            <!-- 文章区 -->
             <section id="articles" class="fade-in-up">
                 <h2>随笔记录</h2>
                 <div class="card">
@@ -391,49 +335,58 @@
                 </div>
             </section>
 
-            <!-- 游戏区 -->
+            <!-- 游戏区：模块化修复版，严格遵守链接要求 -->
             <section id="games" class="fade-in-up">
                 <h2>游戏开发</h2>
-                <div class="card">
-                    <div
-                        style="width: 100%; height: 150px; background: #eee; display: flex; align-items: center; justify-content: center; color: #aaa;">
-                        <span style="font-family:'Noto Sans SC'">NO_SIGNAL</span>
+                <div class="games-grid">
+                    
+                    <!-- 游戏卡片 1：正式链接 -->
+                    <div class="game-card">
+                        <div>
+                            <div class="game-tag" style="color: var(--accent);">LIVE · 小工具</div>
+                            <h3 class="game-title">群友排序机</h3>
+                            <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px;">
+                                Group Friend Sorter.<br>
+                                用于给你的群友排座次，看看谁是那个最“那个”的人。
+                            </p>
+                        </div>
+                        <!-- 这里！就是这里！绝对正确的链接！ -->
+                        <a href="/ykmc/" class="play-btn">>> 进入 / ENTER</a>
                     </div>
-                    <h3 style="margin-top: 20px;">游戏——还没做！</h3>
-                    <p class="placeholder-text" style="margin-top: 10px;">
-                        <a href="/ykmc/" style="color: var(--accent); font-weight: bold; text-decoration: underline;">>>
-                            进入群友排序 (Group Friend Sorter) <<< /a><br><br>
-                                正在新建文件夹... <br>
-                                正在学习Unity... <br>
-                                正在放弃... <br>
-                    </p>
+
+                    <!-- 游戏卡片 2：灰色占位 -->
+                    <div class="game-card empty">
+                        <div class="no-signal">NO_SIGNAL</div>
+                        <p style="text-align: center; font-size: 0.75rem; margin-top: 10px; opacity: 0.6;">新建文件夹...</p>
+                    </div>
+
+                    <!-- 游戏卡片 3：灰色占位 -->
+                    <div class="game-card empty">
+                        <div class="no-signal">VOID</div>
+                        <p style="text-align: center; font-size: 0.75rem; margin-top: 10px; opacity: 0.6;">To be continued</p>
+                    </div>
+
                 </div>
             </section>
 
-            <!-- 互动区：摸摸ヰ世界情緒 -->
             <section id="interaction" class="fade-in-up">
                 <h2>每日治愈 (黑暗?)</h2>
                 <div class="click-area isekai-interaction">
                     <div class="image-wrapper" id="petWrapper">
-                        <!-- 请确保 source/assets/isekai.jpg 存在 -->
-                        <img src="source/assets/isekai.jpg" alt="ヰ世界情緒" class="isekai-img">
-                        <!-- 气泡 -->
+                        <!-- 注意：assets 前面没有 / -->
+                        <img src="assets/isekai.jpg" alt="ヰ世界情緒" class="isekai-img">
                         <div class="speech-bubble" id="speechBubble">哈——!</div>
-                        <!-- 爱心特效生成容器 -->
                         <div class="hearts-container" id="heartsContainer"></div>
                     </div>
 
                     <div class="stats-box">
                         <p style="font-size: 0.9rem; color: var(--text-sub); margin-bottom:5px;">今日累计被摸数</p>
-                        <span id="clickCount"
-                            style="font-size: 2.5rem; font-weight: bold; color: var(--accent); font-family: 'Noto Serif SC';">0</span>
-                        <p class="meme-text" id="memeText" style="font-size: 0.75rem; color: #aaa; margin-top: 5px;">
-                            （她好像真的只是在哈气）</p>
+                        <span id="clickCount" style="font-size: 2.5rem; font-weight: bold; color: var(--accent); font-family: 'Noto Serif SC';">0</span>
+                        <p class="meme-text" id="memeText" style="font-size: 0.75rem; color: #aaa; margin-top: 5px;">（她好像真的只是在哈气）</p>
                     </div>
                 </div>
             </section>
 
-            <!-- 留言板 -->
             <section id="board" class="fade-in-up">
                 <h2>留言板</h2>
                 <div class="card">
@@ -445,12 +398,9 @@
                 </div>
             </section>
 
-            <!-- 跑团劝诱（定型文） -->
             <section id="trpg" class="fade-in-up">
                 <h2 style="border-color: var(--accent); color: var(--accent);">深渊凝视 (TRPG)</h2>
                 <div class="copypasta-container">
-
-                    <!-- DND 版 -->
                     <div class="copypasta-box">
                         <h3>Dungeons & Dragons</h3>
                         你说的对，但是《龙与地下城》是由威世智（Wizards of the Coast）自主研发的一款全新桌面角色扮演游戏。
@@ -458,8 +408,6 @@
                         你将扮演一位名为「冒险者」的神秘角色，在自由的踢门中邂逅性格各异、职业独特的谋杀游民们，和他们一起击败强敌，找回失散的理智——
                         同时，逐步发掘「跑团」的真相。
                     </div>
-
-                    <!-- COC 版 -->
                     <div class="copypasta-box">
                         <h3>Call of Cthulhu</h3>
                         你说的对，但是《克苏鲁的呼唤》是由混沌元素（Chaosium）自主研发的一款全新恐怖调查游戏。
@@ -467,34 +415,28 @@
                         你将扮演一位名为「调查员」的倒霉角色，在作死的调查中邂逅性格各异、此时已经疯了的同伴们，和他们一起面对古神，撕毁自己的角色卡——
                         同时，逐步发掘「奈亚拉托提普」的真相。（理智 -1D10）
                     </div>
-
                 </div>
             </section>
 
-            <!-- 页脚：包含了不蒜子统计 -->
             <footer class="fade-in-up">
                 <span>Code support & Enlightenment by <strong>Gemini AI</strong></span>
                 <span>Hosting provided by <strong>GitHub Pages</strong></span>
                 <span>Created by <strong>凌风</strong> (Who provided the idea and the soul)</span>
-
-                <!-- 新增：不蒜子统计（完美融入日系风格） -->
+                
                 <span id="busuanzi_container_site_pv" style="margin-top: 10px;">
                     本站总观测(访问)量 <span id="busuanzi_value_site_pv"></span> 次
                 </span>
-
+                
                 <span style="font-size: 0.7rem; margin-top: 10px; opacity: 0.5;">© 2026 凌风的个人观测站. 这就是我的网站！！！！</span>
             </footer>
 
         </main>
     </div>
 
-    <!-- 不蒜子统计脚本 -->
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-    <!-- 站内逻辑脚本 -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- 摸摸计数器逻辑 ---
             const petWrapper = document.getElementById('petWrapper');
             const display = document.getElementById('clickCount');
             const memeText = document.getElementById('memeText');
@@ -504,13 +446,8 @@
             display.innerText = count;
 
             const reactions = [
-                "哈——!",
-                "哈——!",
-                "哈——!",
-                "哈...",
-                "哈！",
-                "哈！",
-                "不解"
+                "哈——!", "哈——!", "哈——!",
+                "哈...", "哈！", "哈！", "不解"
             ];
 
             const bubbles = ["哈?", "啧", "Nya", "No", "?!", "..."];
@@ -544,30 +481,19 @@
 
                 petWrapper.appendChild(effect);
 
-                setTimeout(() => {
-                    effect.remove();
-                }, 1000);
+                setTimeout(() => { effect.remove(); }, 1000);
             });
 
-            // --- 滚动显现 ---
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-
-            const observer = new IntersectionObserver((entries, observer) => {
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     }
                 });
-            }, observerOptions);
+            }, { threshold: 0.1 });
 
-            const fadeElements = document.querySelectorAll('.fade-in-up');
-            fadeElements.forEach(el => observer.observe(el));
+            document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
         });
     </script>
 </body>
-
 </html>
