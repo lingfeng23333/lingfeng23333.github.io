@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,23 +8,32 @@
     <!-- 引入 Noto Serif SC 字体，营造日系文学质感 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700&family=Noto+Sans+SC:wght@300;400&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700&family=Noto+Sans+SC:wght@300;400&display=swap"
+        rel="stylesheet">
+
     <style>
         /* --- 核心变量与重置 --- */
         :root {
-            --bg-color: #fdfbf7; /* 极淡的米白色，护眼且有质感 */
-            --text-main: #2b2b2b; /* 墨黑 */
+            --bg-color: #fdfbf7;
+            /* 极淡的米白色，护眼且有质感 */
+            --text-main: #2b2b2b;
+            /* 墨黑 */
             --text-sub: #888888;
-            --accent: #b53f3f; /* 印泥红，用于强调 */
+            --accent: #b53f3f;
+            /* 印泥红，用于强调 */
             --border: #e0e0e0;
             --glass: rgba(255, 255, 255, 0.7);
-            --shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
+            --shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
             --ease: cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Noto Serif SC', serif;
             background-color: var(--bg-color);
@@ -33,8 +43,15 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        a { text-decoration: none; color: inherit; transition: color 0.3s; }
-        a:hover { color: var(--accent); }
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: var(--accent);
+        }
 
         /* --- 布局网格 --- */
         .layout {
@@ -46,10 +63,10 @@
         .sidebar {
             width: 280px;
             padding: 60px 40px;
-            border-right: 1px solid rgba(0,0,0,0.05);
+            border-right: 1px solid rgba(0, 0, 0, 0.05);
             position: fixed;
             height: 100vh;
-            background: linear-gradient(180deg, var(--bg-color) 0%, rgba(255,255,255,0) 100%);
+            background: linear-gradient(180deg, var(--bg-color) 0%, rgba(255, 255, 255, 0) 100%);
             z-index: 10;
             display: flex;
             flex-direction: column;
@@ -61,7 +78,8 @@
             font-weight: 700;
             letter-spacing: 0.1em;
             margin-bottom: 40px;
-            writing-mode: vertical-rl; /* 竖排文字，日系感拉满 */
+            writing-mode: vertical-rl;
+            /* 竖排文字，日系感拉满 */
             text-orientation: upright;
             height: 200px;
         }
@@ -88,7 +106,7 @@
             border-top: 1px solid var(--border);
             padding-top: 20px;
         }
-        
+
         .dnd-highlight {
             color: var(--accent);
             font-weight: bold;
@@ -98,7 +116,8 @@
 
         /* --- 主内容区 --- */
         .main-content {
-            margin-left: 280px; /* 留出侧边栏宽度 */
+            margin-left: 280px;
+            /* 留出侧边栏宽度 */
             flex: 1;
             padding: 80px 10%;
             max-width: 1200px;
@@ -134,14 +153,15 @@
         .card {
             background: #fff;
             padding: 40px;
-            border-radius: 4px; /* 直角微圆，保持严谨 */
+            border-radius: 4px;
+            /* 直角微圆，保持严谨 */
             box-shadow: var(--shadow);
             transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 50px -10px rgba(0,0,0,0.08);
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.08);
         }
 
         /* --- 具体的文章/游戏占位符 --- */
@@ -171,10 +191,10 @@
         }
 
         .isekai-img {
-            width: 200px; 
+            width: 200px;
             height: auto;
             border-radius: 12px;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
             transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             background: #fff;
             padding: 5px;
@@ -200,7 +220,7 @@
             transition: opacity 0.3s, transform 0.3s;
             pointer-events: none;
             z-index: 5;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .image-wrapper:hover .speech-bubble,
@@ -225,8 +245,15 @@
         }
 
         @keyframes floatUp {
-            0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-60px) scale(1.5) rotate(10deg); opacity: 0; }
+            0% {
+                transform: translateY(0) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-60px) scale(1.5) rotate(10deg);
+                opacity: 0;
+            }
         }
 
         /* --- 跑团定型文 --- */
@@ -235,7 +262,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 30px;
         }
-        
+
         .copypasta-box {
             background: #f4f4f4;
             padding: 25px;
@@ -267,13 +294,13 @@
         footer span {
             display: block;
         }
-        
+
         /* 针对不蒜子统计微调，让它不那么突兀 */
         #busuanzi_container_site_pv {
             font-family: 'Noto Sans SC', sans-serif;
             color: var(--text-sub);
         }
-        
+
         #busuanzi_value_site_pv {
             font-weight: bold;
             color: var(--text-main);
@@ -292,25 +319,38 @@
                 border-right: none;
                 border-bottom: 1px solid var(--border);
             }
-            .logo { 
-                height: auto; 
-                writing-mode: horizontal-tb; 
-                margin-bottom: 0; 
+
+            .logo {
+                height: auto;
+                writing-mode: horizontal-tb;
+                margin-bottom: 0;
                 font-size: 1.5rem;
             }
-            .nav-links, .dnd-promo { display: none; }
-            .main-content { margin-left: 0; padding: 40px 20px; }
-            .copypasta-container { grid-template-columns: 1fr; }
+
+            .nav-links,
+            .dnd-promo {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 40px 20px;
+            }
+
+            .copypasta-container {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div class="layout">
         <!-- 侧面栏 -->
         <nav class="sidebar">
             <div class="logo">凌风·站</div>
-            
+
             <ul class="nav-links">
                 <li><a href="#intro">· 观测者</a></li>
                 <li><a href="#articles">· 记录 (文章)</a></li>
@@ -329,7 +369,7 @@
 
         <!-- 主体内容 -->
         <main class="main-content">
-            
+
             <!-- 头部简介 -->
             <section id="intro" class="fade-in-up">
                 <h1 style="font-size: 3rem; margin-bottom: 20px;">只是一个<br>普通的占位符。</h1>
@@ -355,15 +395,17 @@
             <section id="games" class="fade-in-up">
                 <h2>游戏开发</h2>
                 <div class="card">
-                    <div style="width: 100%; height: 150px; background: #eee; display: flex; align-items: center; justify-content: center; color: #aaa;">
+                    <div
+                        style="width: 100%; height: 150px; background: #eee; display: flex; align-items: center; justify-content: center; color: #aaa;">
                         <span style="font-family:'Noto Sans SC'">NO_SIGNAL</span>
                     </div>
                     <h3 style="margin-top: 20px;">游戏——还没做！</h3>
                     <p class="placeholder-text" style="margin-top: 10px;">
-                        正在新建文件夹... <br>
-                        正在学习Unity... <br>
-                        正在放弃... <br>
-                        （这里预留了一个超级好玩的游戏位置）
+                        <a href="/ykmc/" style="color: var(--accent); font-weight: bold; text-decoration: underline;">>>
+                            进入群友排序 (Group Friend Sorter) <<< /a><br><br>
+                                正在新建文件夹... <br>
+                                正在学习Unity... <br>
+                                正在放弃... <br>
                     </p>
                 </div>
             </section>
@@ -374,17 +416,19 @@
                 <div class="click-area isekai-interaction">
                     <div class="image-wrapper" id="petWrapper">
                         <!-- 请确保 source/assets/isekai.jpg 存在 -->
-                        <img src="C:/Users/zorro/Desktop/website/source/assets/isekai.png" alt="ヰ世界情緒" class="isekai-img">
+                        <img src="source/assets/isekai.jpg" alt="ヰ世界情緒" class="isekai-img">
                         <!-- 气泡 -->
                         <div class="speech-bubble" id="speechBubble">哈——!</div>
                         <!-- 爱心特效生成容器 -->
                         <div class="hearts-container" id="heartsContainer"></div>
                     </div>
-                    
+
                     <div class="stats-box">
                         <p style="font-size: 0.9rem; color: var(--text-sub); margin-bottom:5px;">今日累计被摸数</p>
-                        <span id="clickCount" style="font-size: 2.5rem; font-weight: bold; color: var(--accent); font-family: 'Noto Serif SC';">0</span>
-                        <p class="meme-text" id="memeText" style="font-size: 0.75rem; color: #aaa; margin-top: 5px;">（她好像真的只是在哈气）</p>
+                        <span id="clickCount"
+                            style="font-size: 2.5rem; font-weight: bold; color: var(--accent); font-family: 'Noto Serif SC';">0</span>
+                        <p class="meme-text" id="memeText" style="font-size: 0.75rem; color: #aaa; margin-top: 5px;">
+                            （她好像真的只是在哈气）</p>
                     </div>
                 </div>
             </section>
@@ -405,7 +449,7 @@
             <section id="trpg" class="fade-in-up">
                 <h2 style="border-color: var(--accent); color: var(--accent);">深渊凝视 (TRPG)</h2>
                 <div class="copypasta-container">
-                    
+
                     <!-- DND 版 -->
                     <div class="copypasta-box">
                         <h3>Dungeons & Dragons</h3>
@@ -432,12 +476,12 @@
                 <span>Code support & Enlightenment by <strong>Gemini AI</strong></span>
                 <span>Hosting provided by <strong>GitHub Pages</strong></span>
                 <span>Created by <strong>凌风</strong> (Who provided the idea and the soul)</span>
-                
+
                 <!-- 新增：不蒜子统计（完美融入日系风格） -->
                 <span id="busuanzi_container_site_pv" style="margin-top: 10px;">
                     本站总观测(访问)量 <span id="busuanzi_value_site_pv"></span> 次
                 </span>
-                
+
                 <span style="font-size: 0.7rem; margin-top: 10px; opacity: 0.5;">© 2026 凌风的个人观测站. 这就是我的网站！！！！</span>
             </footer>
 
@@ -455,20 +499,20 @@
             const display = document.getElementById('clickCount');
             const memeText = document.getElementById('memeText');
             const speechBubble = document.getElementById('speechBubble');
-            
+
             let count = localStorage.getItem('isekai_pats') || 0;
             display.innerText = count;
 
             const reactions = [
-                "哈——!", 
-                "哈——!", 
-                "哈——!", 
-                "哈...", 
-                "哈！", 
+                "哈——!",
+                "哈——!",
+                "哈——!",
+                "哈...",
+                "哈！",
                 "哈！",
                 "不解"
             ];
-            
+
             const bubbles = ["哈?", "啧", "Nya", "No", "?!", "..."];
 
             petWrapper.addEventListener('click', (e) => {
@@ -476,11 +520,11 @@
                 display.innerText = count;
                 localStorage.setItem('isekai_pats', count);
 
-                if(count % 3 === 0) {
-                     memeText.innerText = "状态：" + reactions[Math.floor(Math.random() * reactions.length)];
+                if (count % 3 === 0) {
+                    memeText.innerText = "状态：" + reactions[Math.floor(Math.random() * reactions.length)];
                 }
-                
-                if(Math.random() > 0.7) {
+
+                if (Math.random() > 0.7) {
                     speechBubble.innerText = bubbles[Math.floor(Math.random() * bubbles.length)];
                 } else {
                     speechBubble.innerText = "哈——!";
@@ -490,15 +534,15 @@
                 effect.classList.add('floating-heart');
                 const contentTypes = ["+1", "♥", "🐾", "⚡"];
                 effect.innerText = contentTypes[Math.floor(Math.random() * contentTypes.length)];
-                
+
                 const rect = petWrapper.getBoundingClientRect();
-                const x = e.clientX - rect.left - 20; 
+                const x = e.clientX - rect.left - 20;
                 const y = e.clientY - rect.top - 20;
-                
+
                 effect.style.left = x + 'px';
                 effect.style.top = y + 'px';
-                
-                petWrapper.appendChild(effect); 
+
+                petWrapper.appendChild(effect);
 
                 setTimeout(() => {
                     effect.remove();
@@ -525,4 +569,5 @@
         });
     </script>
 </body>
+
 </html>

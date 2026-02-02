@@ -1,0 +1,90 @@
+<html>
+
+<head>
+  <link rel="shortcut icon" href="src/assets/default.png" type="image/x-icon">
+  <link rel="icon" href="src/assets/default.png" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta name="og:site_name" content="群友排序 (Group Friend Sorter)">
+  <meta name="og:description" content="一个简单的群友排序网站。">
+  <title>群友排序 (Group Friend Sorter)</title>
+
+  <link rel="stylesheet" type="text/css" href="src/css/reset.css">
+  <link rel="stylesheet" type="text/css" href="src/css/styles.css">
+
+  <script src="src/js/data.js"></script>
+  <script src="src/js/data/qunyou.js"></script>
+  
+  <script src="src/js/html2canvas.min.js"></script>
+  <script src="src/js/lz-string.min.js"></script>
+  <script src="src/js/seedrandom.min.js"></script>
+  <script src="src/js/main.js"></script>
+  <script src="src/js/darkmode.js"></script>
+</head>
+
+<body>
+<div class="container">
+
+    <div class="progress">
+        <span class="progressbattle"></span>
+        <div class="progressbar">
+            <div class="progressfill"><span class="progresstext"></span></div>
+        </div>
+    </div>
+
+    <div class="sorter">
+        <img src="src/assets/default.png" class="left sort image">
+
+        <div class="starting start button">群友排序<br><br>点击开始!</div>
+        <div class="starting load button">读取存档 <span></span></div>
+
+        <div class="loading button"><div></div><span>加载中...</span></div>
+
+        <div class="sorting tie button">平局</div>
+        <div class="sorting undo button">撤销</div>
+        <div class="sorting save button">保存进度</div>
+
+        <div class="finished save button">生成结果链接</div>
+        <div class="finished getimg button">生成图片</div>
+        <div class="finished list button">生成文本列表</div>
+
+        <img src="src/assets/default.png" class="right sort image">
+
+        <div class="left sort text"><p></p></div>
+        <div class="right sort text"><p></p></div>
+    </div>
+
+    <div class="options"></div>
+    <div class="image selector">在结果中显示图片: </div>
+    <div class="time taken"></div>
+    <div class="results"></div>
+
+    <div class="info">
+        <a class="clearsave">清除存档</a>
+        
+        <br><br>
+
+        <p>群友排序器。</p>
+        <p>选择你要排序的范围，然后点击开始。</p>
+        <p>点击你更喜欢的那个，或者如果觉得差不多/不认识就选“平局”。</p>
+
+        <br>
+
+        <p>快捷键:<br> H/左箭头 (选左边), J/下箭头 (撤销), K/上箭头 (平局)<br>L/右箭头 (选右边), S (保存进度).</p><br>
+        <p>排序前:<br>S/回车 (开始排序) L (读取进度).
+        <p>1/2/3 对应前三个按钮。</p>
+
+        <br>
+
+        <p>Maintained by User</p>
+        <p>Source code valid on <a href="https://github.com/ufalsalman/bandorisorter/">GitHub</a></p>
+        
+        <br>
+        
+        <p>如果有问题请联系管理员。</p>
+
+        <br>
+    </div>
+</div>
+</body>
+
+</html>
