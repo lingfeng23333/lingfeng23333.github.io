@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>凌风 | 个人观测站</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700&family=Noto+Sans+SC:wght@300;400;700&display=swap"
+        rel="stylesheet">
+
     <style>
         /* --- 核心变量 --- */
         :root {
@@ -16,12 +19,16 @@
             --text-sub: #888888;
             --accent: #b53f3f;
             --border: #e0e0e0;
-            --shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
+            --shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
             --ease: cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Noto Serif SC', serif;
             background-color: var(--bg-color);
@@ -31,20 +38,30 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        a { text-decoration: none; color: inherit; transition: color 0.3s; }
-        a:hover { color: var(--accent); }
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: var(--accent);
+        }
 
         /* --- 布局 --- */
-        .layout { display: flex; min-height: 100vh; }
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
 
         /* --- 侧边栏 --- */
         .sidebar {
             width: 280px;
             padding: 60px 40px;
-            border-right: 1px solid rgba(0,0,0,0.05);
+            border-right: 1px solid rgba(0, 0, 0, 0.05);
             position: fixed;
             height: 100vh;
-            background: linear-gradient(180deg, var(--bg-color) 0%, rgba(255,255,255,0) 100%);
+            background: linear-gradient(180deg, var(--bg-color) 0%, rgba(255, 255, 255, 0) 100%);
             z-index: 10;
             display: flex;
             flex-direction: column;
@@ -71,7 +88,10 @@
             transition: transform 0.4s var(--ease), color 0.3s;
         }
 
-        .nav-links li:hover { transform: translateX(10px); color: var(--text-main); }
+        .nav-links li:hover {
+            transform: translateX(10px);
+            color: var(--text-main);
+        }
 
         .dnd-promo {
             margin-top: auto;
@@ -80,7 +100,13 @@
             border-top: 1px solid var(--border);
             padding-top: 20px;
         }
-        .dnd-highlight { color: var(--accent); font-weight: bold; display: block; margin-top: 5px; }
+
+        .dnd-highlight {
+            color: var(--accent);
+            font-weight: bold;
+            display: block;
+            margin-top: 5px;
+        }
 
         /* --- 主内容 --- */
         .main-content {
@@ -96,10 +122,17 @@
             transform: translateY(30px);
             transition: opacity 1s var(--ease), transform 1s var(--ease);
         }
-        .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         /* --- 模块样式 --- */
-        section { margin-bottom: 120px; position: relative; }
+        section {
+            margin-bottom: 120px;
+            position: relative;
+        }
 
         h2 {
             font-size: 1.5rem;
@@ -117,9 +150,17 @@
             box-shadow: var(--shadow);
             transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
         }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px -10px rgba(0,0,0,0.08); }
-        
-        .placeholder-text { color: var(--text-sub); font-style: italic; font-family: 'Noto Serif SC', serif; }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.08);
+        }
+
+        .placeholder-text {
+            color: var(--text-sub);
+            font-style: italic;
+            font-family: 'Noto Serif SC', serif;
+        }
 
         /* --- 游戏区 Grid (修复后) --- */
         .games-grid {
@@ -176,7 +217,8 @@
             margin-top: 20px;
             padding: 10px 20px;
             background: var(--text-main);
-            color: #fff !important; /* 强制覆盖链接颜色 */
+            color: #fff !important;
+            /* 强制覆盖链接颜色 */
             font-size: 0.85rem;
             border-radius: 4px;
             text-align: center;
@@ -184,7 +226,10 @@
             text-decoration: none;
             transition: background 0.3s;
         }
-        .play-btn:hover { background: var(--accent); }
+
+        .play-btn:hover {
+            background: var(--accent);
+        }
 
         .no-signal {
             font-family: 'Noto Sans SC';
@@ -213,16 +258,18 @@
         }
 
         .isekai-img {
-            width: 200px; 
+            width: 200px;
             height: auto;
             border-radius: 12px;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
             transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             background: #fff;
             padding: 5px;
         }
 
-        .image-wrapper:active .isekai-img { transform: scale(0.92) translateY(5px); }
+        .image-wrapper:active .isekai-img {
+            transform: scale(0.92) translateY(5px);
+        }
 
         .speech-bubble {
             position: absolute;
@@ -239,13 +286,19 @@
             transition: opacity 0.3s, transform 0.3s;
             pointer-events: none;
             z-index: 5;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .image-wrapper:hover .speech-bubble,
-        .image-wrapper:active .speech-bubble { opacity: 1; transform: translateY(0); }
+        .image-wrapper:active .speech-bubble {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-        .stats-box { text-align: center; margin-top: 15px; }
+        .stats-box {
+            text-align: center;
+            margin-top: 15px;
+        }
 
         .floating-heart {
             position: absolute;
@@ -259,14 +312,38 @@
         }
 
         @keyframes floatUp {
-            0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-60px) scale(1.5) rotate(10deg); opacity: 0; }
+            0% {
+                transform: translateY(0) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-60px) scale(1.5) rotate(10deg);
+                opacity: 0;
+            }
         }
 
         /* --- TRPG & Footer --- */
-        .copypasta-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        .copypasta-box { background: #f4f4f4; padding: 25px; font-size: 0.85rem; color: #555; line-height: 2; text-align: justify; }
-        .copypasta-box h3 { margin-bottom: 15px; font-size: 1rem; color: var(--accent); }
+        .copypasta-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .copypasta-box {
+            background: #f4f4f4;
+            padding: 25px;
+            font-size: 0.85rem;
+            color: #555;
+            line-height: 2;
+            text-align: justify;
+        }
+
+        .copypasta-box h3 {
+            margin-bottom: 15px;
+            font-size: 1rem;
+            color: var(--accent);
+        }
 
         footer {
             margin-top: 100px;
@@ -279,21 +356,59 @@
             flex-direction: column;
             gap: 5px;
         }
-        
-        #busuanzi_container_site_pv { font-family: 'Noto Sans SC', sans-serif; color: var(--text-sub); }
-        #busuanzi_value_site_pv { font-weight: bold; color: var(--text-main); margin: 0 4px; }
+
+        #busuanzi_container_site_pv {
+            font-family: 'Noto Sans SC', sans-serif;
+            color: var(--text-sub);
+        }
+
+        #busuanzi_value_site_pv {
+            font-weight: bold;
+            color: var(--text-main);
+            margin: 0 4px;
+        }
 
         /* --- Mobile --- */
         @media (max-width: 768px) {
-            .sidebar { width: 100%; height: auto; position: relative; flex-direction: row; align-items: center; padding: 20px; border-right: none; border-bottom: 1px solid var(--border); }
-            .logo { height: auto; writing-mode: horizontal-tb; margin-bottom: 0; font-size: 1.5rem; }
-            .nav-links, .dnd-promo { display: none; }
-            .main-content { margin-left: 0; padding: 40px 20px; }
-            .copypasta-container { grid-template-columns: 1fr; }
-            .games-grid { grid-template-columns: 1fr; }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                flex-direction: row;
+                align-items: center;
+                padding: 20px;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .logo {
+                height: auto;
+                writing-mode: horizontal-tb;
+                margin-bottom: 0;
+                font-size: 1.5rem;
+            }
+
+            .nav-links,
+            .dnd-promo {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 40px 20px;
+            }
+
+            .copypasta-container {
+                grid-template-columns: 1fr;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div class="layout">
@@ -315,7 +430,7 @@
         </nav>
 
         <main class="main-content">
-            
+
             <section id="intro" class="fade-in-up">
                 <h1 style="font-size: 3rem; margin-bottom: 20px;">只是一个<br>普通的占位符。</h1>
                 <p style="color: var(--text-sub); max-width: 600px;">
@@ -339,7 +454,7 @@
             <section id="games" class="fade-in-up">
                 <h2>游戏开发</h2>
                 <div class="games-grid">
-                    
+
                     <!-- 游戏卡片 1：正式链接 -->
                     <div class="game-card">
                         <div>
@@ -363,7 +478,8 @@
                     <!-- 游戏卡片 3：灰色占位 -->
                     <div class="game-card empty">
                         <div class="no-signal">VOID</div>
-                        <p style="text-align: center; font-size: 0.75rem; margin-top: 10px; opacity: 0.6;">To be continued</p>
+                        <p style="text-align: center; font-size: 0.75rem; margin-top: 10px; opacity: 0.6;">To be
+                            continued</p>
                     </div>
 
                 </div>
@@ -381,8 +497,10 @@
 
                     <div class="stats-box">
                         <p style="font-size: 0.9rem; color: var(--text-sub); margin-bottom:5px;">今日累计被摸数</p>
-                        <span id="clickCount" style="font-size: 2.5rem; font-weight: bold; color: var(--accent); font-family: 'Noto Serif SC';">0</span>
-                        <p class="meme-text" id="memeText" style="font-size: 0.75rem; color: #aaa; margin-top: 5px;">（她好像真的只是在哈气）</p>
+                        <span id="clickCount"
+                            style="font-size: 2.5rem; font-weight: bold; color: var(--accent); font-family: 'Noto Serif SC';">0</span>
+                        <p class="meme-text" id="memeText" style="font-size: 0.75rem; color: #aaa; margin-top: 5px;">
+                            （她好像真的只是在哈气）</p>
                     </div>
                 </div>
             </section>
@@ -422,11 +540,11 @@
                 <span>Code support & Enlightenment by <strong>Gemini AI</strong></span>
                 <span>Hosting provided by <strong>GitHub Pages</strong></span>
                 <span>Created by <strong>凌风</strong> (Who provided the idea and the soul)</span>
-                
+
                 <span id="busuanzi_container_site_pv" style="margin-top: 10px;">
                     本站总观测(访问)量 <span id="busuanzi_value_site_pv"></span> 次
                 </span>
-                
+
                 <span style="font-size: 0.7rem; margin-top: 10px; opacity: 0.5;">© 2026 凌风的个人观测站. 这就是我的网站！！！！</span>
             </footer>
 
@@ -495,5 +613,9 @@
             document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
         });
     </script>
+
+    <!-- Live2D Widget -->
+    <script src="/live2d-widget/dist/autoload.js"></script>
 </body>
+
 </html>
