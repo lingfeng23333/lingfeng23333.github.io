@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>群友大乱斗 · Card Battle</title>
+    <meta name="description" content="4v4在线卡牌对战游戏">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="toastContainer" class="toast-container"></div>
+    <div id="danmakuArea" class="danmaku-area"></div>
+
+    <!-- ═══════════════════════ LOBBY ═══════════════════════ -->
+    <div id="screenLobby" class="screen active">
+        <div class="lobby-box">
+            <div class="logo-area">
+                <h1 class="game-logo">CARD<span class="logo-x">⚔</span>BATTLE</h1>
+                <p class="game-sub">群友大乱斗</p>
+            </div>
+            <div class="lobby-form">
+                <input type="text" id="inputNickname" class="input-field" placeholder="你的昵称" maxlength="8">
+                <button id="btnCreateRoom" class="btn btn-gold">⚔ 创建房间</button>
+                <div class="divider"><span>或</span></div>
+                <input type="text" id="inputRoomCode" class="input-field" placeholder="4位房间代码" maxlength="4"
+                    style="text-transform:uppercase">
+                <button id="btnJoinRoom" class="btn btn-secondary">🚪 加入房间</button>
+                <div class="divider"><span>单人</span></div>
+                <button id="btnAIMode" class="btn btn-ai">🤖 AI练习模式</button>
+            </div>
+            <p class="lobby-tip">先到100分获胜 · 死亡送10分 · 10秒复活</p>
+        </div>
+    </div>
+
+    <!-- ═══════════════════ AI CHAR SELECT ══════════════════ -->
+    <div id="screenAISelect" class="screen">
+        <div class="waiting-room">
+            <h2>🤖 AI模式 — 选择你的角色</h2>
+            <div id="aiCharGrid" class="char-select-grid"></div>
+            <button id="btnStartAI" class="btn btn-gold hidden">⚔ 开始AI对战</button>
+            <button id="btnBackFromAI" class="btn btn-secondary" style="margin-top:10px">返回</button>
+        </div>
+    </div>
+
+    <!-- ═══════════════════ WAITING ROOM ═══════════════════ -->
+    <div id="screenWaiting" class="screen">
+        <div class="waiting-room">
+            <h2>⚔ 等待玩家 <span id="playerCount">(0/8)</span></h2>
+            <div class="room-code-display">房间代码: <span id="displayRoomCode" class="room-code">----</span></div>
+            <div id="charSelectGrid" class="char-select-grid"></div>
+            <div id="playersGrid" class="players-grid"></div>
+            <div class="waiting-actions">
+                <button id="btnReady" class="btn btn-secondary">✓ 准备就绪</button>
+                <button id="btnStartGame" class="btn btn-gold hidden">🚀 开始游戏</button>
+                <button id="btnLeaveRoom" class="btn btn-danger">✗ 离开</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════ GAME BOARD ═══════════════════ -->
+    <div id="screenGame" class="screen">
+        <div class="game-layout">
+            <!-- Shame Pillar (Left Panel) -->
+            <div id="shamePillar" class="shame-pillar">
+                <div class="shame-title">🏆 TOP FEEDER</div>
+                <div class="shame-subtitle">送头之王</div>
+                <div class="shame-list"></div>
+            </div>
+
+            <!-- Main Battle Area -->
+            <div class="battle-area">
+                <!-- Score Bars -->
+                <div class="score-section">
+                    <div class="score-bar star-score">
+                        <span class="score-label">⭐ 星辰</span>
+                        <div class="score-track">
+                            <div id="scoreFillStar" class="score-fill star-fill"></div>
+                        </div>
+                        <span id="scoreStarValue" class="score-value">0</span><span class="score-max">/100</span>
+                    </div>
+                    <div class="score-bar abyss-score">
+                        <span class="score-label">🌑 深渊</span>
+                        <div class="score-track">
+                            <div id="scoreFillAbyss" class="score-fill abyss-fill"></div>
+                        </div>
+                        <span id="scoreAbyssValue" class="score-value">0</span><span class="score-max">/100</span>
+                    </div>
+                </div>
+
+                <!-- Info Bar -->
+                <div class="info-bar">
+                    <div id="roundDisplay" class="round-display">ROUND 1</div>
+                    <div class="dp-bar"><span class="dp-label">DP</span>
+                        <div class="dp-track">
+                            <div id="dpFill" class="dp-fill"></div>
+                        </div><span id="dpValue" class="dp-val">0</span>%
+                    </div>
+                    <div id="turnIndicator" class="turn-indicator"></div>
+                </div>
+
+                <div id="yourTurnBanner" class="your-turn-banner">⚡ YOUR TURN ⚡</div>
+
+                <!-- Team Rosters -->
+                <div class="rosters">
+                    <div id="rosterStar" class="roster star">
+                        <div class="roster-title">⭐ 星辰阵营</div>
+                    </div>
+                    <div id="rosterAbyss" class="roster abyss">
+                        <div class="roster-title">🌑 深渊阵营</div>
+                    </div>
+                </div>
+
+                <!-- Battle Log -->
+                <div class="log-section">
+                    <div class="log-header">📜 战斗日志</div>
+                    <div id="battleLog" class="battle-log"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hand Area (Fixed Bottom) -->
+        <div class="hand-area">
+            <div class="hand-info"><span>⚡ AP: <b id="apDisplay">0</b></span></div>
+            <div id="cardsRow" class="cards-row"></div>
+            <div class="hand-actions">
+                <button id="btnPlayCard" class="btn btn-gold" disabled>出牌</button>
+                <button id="btnEndTurn" class="btn btn-secondary" disabled>结束回合</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════ RESULT ═══════════════════ -->
+    <div id="screenResult" class="screen">
+        <div class="result-box">
+            <h1 id="resultTitle" class="result-title">VICTORY</h1>
+            <p id="resultSubtitle" class="result-sub"></p>
+            <div id="resultStats" class="result-stats"></div>
+            <button id="btnBackToLobby" class="btn btn-gold" style="margin-top:30px">返回大厅</button>
+        </div>
+    </div>
+
+    <!-- ═══════════ OVERLAYS ═══════════ -->
+    <div id="targetOverlay" class="overlay">
+        <div class="overlay-content">
+            <h3 id="targetTitle">选择目标</h3>
+            <div id="targetList" class="target-list"></div>
+            <button id="btnCancelTarget" class="btn btn-secondary">取消</button>
+        </div>
+    </div>
+    <div id="chainOverlay" class="overlay chain-overlay">
+        <div class="overlay-content chain-box">
+            <h3>🔗 共鸣连携!</h3>
+            <p id="chainInfo"></p>
+            <div class="chain-timer"><span id="chainTimer">3</span>s</div>
+        </div>
+    </div>
+    <div id="climaxBanner" class="climax-banner">
+        <div class="climax-text">🔥 CLIMAX PHASE 🔥</div>
+    </div>
+    <div id="coinOverlay" class="overlay coin-overlay">
+        <div class="overlay-content">
+            <div id="coinEmoji" class="coin-flip">🪙</div>
+            <div id="coinResult" class="coin-result"></div>
+        </div>
+    </div>
+    <div id="tombstoneOverlay" class="overlay">
+        <div class="overlay-content tombstone-box">
+            <h3>🪦 <span id="tombstoneTarget"></span> 的墓碑</h3>
+            <p style="color:var(--text-dim);margin-bottom:15px">选择一条弹幕嘲讽TA</p>
+            <div id="tombstoneButtons" class="tombstone-btns"></div>
+            <button class="btn btn-secondary" style="margin-top:15px"
+                onclick="document.getElementById('tombstoneOverlay').classList.remove('active')">算了</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/cards.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
